@@ -15,7 +15,7 @@ const Navbar = () => {
       if (userId) {
         try {
           const response = await axios.get(
-            `https://webdatamanagement.onrender.com//api/users/${userId}`
+            `https://webdatamanagement.onrender.com/api/users/${userId}`
           );
           setUser(response.data);
         } catch (error) {

@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        "https://webdatamanagement.onrender.com//api/auth/login",
+        "https://webdatamanagement.onrender.com/api/auth/login",
         { email, password }
       );
       localStorage.setItem("token", response.data.token);

@@ -9,7 +9,7 @@ const NutritionPage = () => {
   const fetchNutrition = async () => {
     try {
       const response = await axios.get(
-        `https://webdatamanagement.onrender.com//api/nutrition/${foodItem}`
+        `https://webdatamanagement.onrender.com/api/nutrition/${foodItem}`
       );
       setNutrition(response.data[0]); // Assuming API returns an array
     } catch (error) {

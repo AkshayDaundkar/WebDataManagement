@@ -12,7 +12,7 @@ const AIChatPage = () => {
 
     try {
       const res = await axios.post(
-        "https://webdatamanagement.onrender.com//api/ai/chat",
+        "https://webdatamanagement.onrender.com/api/ai/chat",
         {
           message,
         }

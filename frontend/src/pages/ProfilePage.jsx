@@ -12,7 +12,7 @@ const ProfilePage = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `https://webdatamanagement.onrender.com//api/users/${userId}`
+          `https://webdatamanagement.onrender.com/api/users/${userId}`
         );
         setUser(response.data);
         setUpdatedUser(response.data);
@@ -32,7 +32,7 @@ const ProfilePage = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `https://webdatamanagement.onrender.com//api/users/${userId}`,
+        `https://webdatamanagement.onrender.com/api/users/${userId}`,
         updatedUser
       );
       alert("Profile updated successfully!");
