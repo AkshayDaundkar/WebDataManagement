@@ -32,17 +32,17 @@ const DashboardPage = () => {
   const fetchData = async () => {
     try {
       const userResponse = await axios.get(
-        `http://localhost:5000/api/users/${userId}`
+        `https://webdatamanagement.onrender.com//api/users/${userId}`
       );
       setUser(userResponse.data);
 
       const burnedResponse = await axios.get(
-        `http://localhost:5000/api/burned-calories/${userId}`
+        `https://webdatamanagement.onrender.com//api/burned-calories/${userId}`
       );
       setBurnedCalories(burnedResponse.data);
 
       const foodResponse = await axios.get(
-        `http://localhost:5000/api/food-intake/${userId}`
+        `https://webdatamanagement.onrender.com//api/food-intake/${userId}`
       );
       setFoodIntake(foodResponse.data);
     } catch (error) {
@@ -52,11 +52,14 @@ const DashboardPage = () => {
 
   const addBurnedCalories = async () => {
     if (!newActivity || isNaN(newCalories) || newCalories <= 0) return;
-    await axios.post("http://localhost:5000/api/burned-calories", {
-      userId,
-      activity: newActivity,
-      calories: parseInt(newCalories),
-    });
+    await axios.post(
+      "https://webdatamanagement.onrender.com//api/burned-calories",
+      {
+        userId,
+        activity: newActivity,
+        calories: parseInt(newCalories),
+      }
+    );
     setNewActivity("");
     setNewCalories("");
     fetchData(); // Re-fetch data to update UI
@@ -65,11 +68,14 @@ const DashboardPage = () => {
   const addFoodIntake = async () => {
     if (!newFoodCategory || isNaN(newFoodCalories) || newFoodCalories <= 0)
       return;
-    await axios.post("http://localhost:5000/api/food-intake", {
-      userId,
-      category: newFoodCategory,
-      calories: parseInt(newFoodCalories),
-    });
+    await axios.post(
+      "https://webdatamanagement.onrender.com//api/food-intake",
+      {
+        userId,
+        category: newFoodCategory,
+        calories: parseInt(newFoodCalories),
+      }
+    );
     setNewFoodCategory("");
     setNewFoodCalories("");
     fetchData(); // Re-fetch data to update UI

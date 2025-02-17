@@ -11,9 +11,12 @@ const AIChatPage = () => {
     setResponses([...responses, { text: message, isUser: true }]);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/ai/chat", {
-        message,
-      });
+      const res = await axios.post(
+        "https://webdatamanagement.onrender.com//api/ai/chat",
+        {
+          message,
+        }
+      );
       setResponses((prev) => [
         ...prev,
         { text: res.data.response, isUser: false },

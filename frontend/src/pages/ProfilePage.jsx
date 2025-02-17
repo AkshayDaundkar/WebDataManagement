@@ -12,7 +12,7 @@ const ProfilePage = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/users/${userId}`
+          `https://webdatamanagement.onrender.com//api/users/${userId}`
         );
         setUser(response.data);
         setUpdatedUser(response.data);
@@ -31,7 +31,10 @@ const ProfilePage = () => {
   // Handle Form Submit
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/users/${userId}`, updatedUser);
+      await axios.put(
+        `https://webdatamanagement.onrender.com//api/users/${userId}`,
+        updatedUser
+      );
       alert("Profile updated successfully!");
     } catch (error) {
       alert("Error updating profile.");

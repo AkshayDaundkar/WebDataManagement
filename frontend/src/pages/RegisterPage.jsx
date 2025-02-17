@@ -20,7 +20,7 @@ const RegisterPage = () => {
   const handleRegister = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://webdatamanagement.onrender.com//api/auth/register",
         user
       );
       setUser(response.data);
