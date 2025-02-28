@@ -18,7 +18,7 @@ const LoginPage = () => {
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userId", response.data.userId);
       alert("Login successful!");
-      navigate("/dashboard");
+      navigate("/");
     } catch (err) {
       setError("Invalid email or password.");
     }
