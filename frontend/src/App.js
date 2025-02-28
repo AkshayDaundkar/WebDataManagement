@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import AppRouter from "./routes/Router";
 import "./App.css";
 import FloatingChat from "./pages/FloatingChat";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <AppRouter />
       </div>
       <FloatingChat />
+      <Footer />
     </Router>
   );
 }

@@ -10,6 +10,16 @@ body {
   padding: 20px;
 }
 
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1; /* Pushes footer to bottom */
+}
+
 h1,
 h2 {
   color: #2c3e50;
