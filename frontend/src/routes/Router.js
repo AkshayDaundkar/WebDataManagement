@@ -8,18 +8,22 @@ import DashboardPage from "../pages/DashboardPage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import ProfilePage from "../pages/ProfilePage";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/exercises" element={<ExercisePage />} />
-      <Route path="/nutrition" element={<NutritionPage />} />
-      <Route path="/ai-chat" element={<AIChatPage />} />
-      <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      <Route path="/profile" element={<ProfilePage />} />
+
+      <Route element={<PrivateRoute />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/exercises" element={<ExercisePage />} />
+        <Route path="/nutrition" element={<NutritionPage />} />
+        <Route path="/ai-chat" element={<AIChatPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Route>
     </Routes>
   );
 };

@@ -53,8 +53,8 @@ const LoginPage = () => {
 
         <label>Don't have Account?</label>
         <button className="register-btn">
-          <NavLink to="/login" className="register-btn">
-            Login
+          <NavLink to="/register" className="register-btn">
+            Register
           </NavLink>
         </button>
       </div>

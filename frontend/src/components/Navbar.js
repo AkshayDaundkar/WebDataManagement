@@ -29,15 +29,16 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
+    setUser(null);
     alert("Logged out successfully!");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
     <nav className="navbar">
       <div className="logo-container">
         <img src={logo} alt="Fitness Tracker Logo" className="logo-img" />
-        <h1 className="logo-text">Fitness Tracker</h1>
+        <h1 className="logo-text">fitness X tracker</h1>
       </div>
 
       <div className="nav-links">
