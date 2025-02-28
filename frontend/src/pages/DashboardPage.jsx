@@ -102,12 +102,12 @@ const DashboardPage = () => {
 
   // Line Chart Data for Calories Burned Over Time
   const lineChartData = burnedCalories.map((entry, index) => ({
-    name: `Entry ${index + 1}`,
+    date: new Date(entry.date).toLocaleDateString(), // Format date
     calories: entry.calories,
   }));
 
   const intakeChartData = foodIntake.map((entry, index) => ({
-    name: `Entry ${index + 1}`,
+    date: new Date(entry.date).toLocaleDateString(),
     calories: entry.calories,
   }));
 
@@ -177,8 +177,10 @@ const DashboardPage = () => {
           <h3>Calories Burned Over Time</h3>
           <LineChart width={450} height={450} data={lineChartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <YAxis
+              label={{ value: "Calories", angle: -90, position: "insideLeft" }}
+            />
             <Tooltip />
             <Line type="monotone" dataKey="calories" stroke="#0000FF" />
           </LineChart>
@@ -247,8 +249,10 @@ const DashboardPage = () => {
           <h3>Calories Taken Over Time</h3>
           <LineChart width={450} height={450} data={intakeChartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <YAxis
+              label={{ value: "Calories", angle: -90, position: "insideLeft" }}
+            />
             <Tooltip />
             <Line type="monotone" dataKey="calories" stroke="#27ae60" />
           </LineChart>
