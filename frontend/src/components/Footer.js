@@ -24,21 +24,21 @@ const Footer = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            🐦 Twitter
+            Twitter
           </a>
           <a
             href="https://github.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            💻 GitHub
+            GitHub
           </a>
           <a
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
           >
-            📷 Instagram
+            Instagram
           </a>
         </div>
       </div>

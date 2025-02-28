@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Navbar.css";
-import logo from "../assets/logo.png"; // Add your custom logo here
+import logo from "../assets/logo2.png"; // Add your custom logo here
 
 const Navbar = () => {
   const navigate = useNavigate();
