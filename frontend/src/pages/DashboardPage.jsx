@@ -24,6 +24,7 @@ const DashboardPage = () => {
   const [newCalories, setNewCalories] = useState("");
   const [newFoodCategory, setNewFoodCategory] = useState("");
   const [newFoodCalories, setNewFoodCalories] = useState("");
+  const [insights, setInsights] = useState(""); // AI-Powered Insights
 
   useEffect(() => {
     fetchData();
@@ -45,6 +46,7 @@ const DashboardPage = () => {
         `https://webdatamanagement.onrender.com/api/food-intake/${userId}`
       );
       setFoodIntake(foodResponse.data);
+      generateInsights(burnedResponse.data, foodResponse.data);
     } catch (error) {
       console.error("Error fetching data", error);
     }
@@ -97,7 +99,7 @@ const DashboardPage = () => {
   // Update Bar Chart for Calories Burned
   const barData = [
     { name: "Burned", value: totalBurned },
-    { name: "Goal", value: 1500 },
+    { name: "Goal", value: 2400 },
   ];
 
   // Line Chart Data for Calories Burned Over Time
@@ -111,11 +113,71 @@ const DashboardPage = () => {
     calories: entry.calories,
   }));
 
+  const generateInsights = (burnedCalories, foodIntake) => {
+    const totalBurned = burnedCalories.reduce(
+      (acc, entry) => acc + entry.calories,
+      0
+    );
+    const totalConsumed = foodIntake.reduce(
+      (acc, entry) => acc + entry.calories,
+      0
+    );
+    const calorieGoal = 2400; // Static goal for now
+
+    let message = "";
+
+    if (totalConsumed > totalBurned) {
+      message =
+        "⚠️ You are consuming more calories than you're burning! Consider reducing sugar intake and opting for high-protein, low-carb meals.";
+      message +=
+        " 🥦 Include more leafy greens, lean protein (chicken, fish, tofu), and whole grains in your diet.";
+      message +=
+        " 🏃 Try incorporating cardio exercises like running, cycling, or HIIT for better calorie balance.";
+    } else if (totalBurned > totalConsumed) {
+      message =
+        "✅ Great job! You're burning more calories than you're consuming. Keep up the good work!";
+      message +=
+        " 🍌 Consider adding healthy fats (avocado, nuts) and protein-rich meals to maintain muscle mass.";
+      message +=
+        " 🏋️‍♂️ Strength training can help you retain muscle while losing fat.";
+    } else {
+      message =
+        "⚖️ Your calorie intake and burn are balanced. Maintain this to sustain your fitness level.";
+      message +=
+        " 🍉 Stay hydrated and include fiber-rich foods to keep your metabolism in check.";
+    }
+
+    if (totalBurned >= calorieGoal) {
+      message += " 🎯 You've reached your daily calorie burn goal!";
+      message +=
+        " 🥗 Continue eating a balanced diet and adjust based on your activity levels.";
+    } else {
+      message += ` 🔥 You need to burn ${
+        calorieGoal - totalBurned
+      } more calories to meet your goal.`;
+      message +=
+        " 💡 Try increasing your daily steps to 10,000 or adding a quick 30-minute workout.";
+    }
+
+    if (totalConsumed > 3000) {
+      message +=
+        " ⚠️ You’ve consumed over 3000 calories today. Avoid sugary drinks and processed foods.";
+    }
+
+    setInsights(message);
+  };
+
   return (
     <div className="dashboard-container">
       {user && (
         <h2 className="greeting">Hello, {user.name}! Your Fitness Dashboard</h2>
       )}
+
+      {/* 🔥 AI-Powered Insights Section */}
+      <div className="insights-container">
+        <h3>📊 AI-Powered Insights</h3>
+        <p>{insights}</p>
+      </div>
 
       <div className="dashboard-grid">
         {/* Row 1: Calories Burned & Tracking */}

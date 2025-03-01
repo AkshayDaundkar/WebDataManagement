@@ -38,7 +38,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo-container">
         <img src={logo} alt="Fitness Tracker Logo" className="logo-img" />
-        <h1 className="logo-text">fitness X tracker</h1>
+        <h1 className="logo-text">Fitness X tracker</h1>
       </div>
 
       <div className="nav-links">
@@ -63,9 +63,9 @@ const Navbar = () => {
         {user ? <span className="user-greeting">{user.name}!</span> : null}
         {token ? (
           <>
-            <button onClick={handleLogout} className="logout-btn">
+            <p onClick={handleLogout} className="logout-btn">
               Logout
-            </button>
+            </p>
             <NavLink to="/profile" className="profile-btn">
               Profile
             </NavLink>
