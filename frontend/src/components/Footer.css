@@ -1,15 +1,13 @@
-/* Footer Styles */
 .footer {
   background-color: rgb(30, 23, 23);
-  color: rgb(0, 0, 0);
+  color: white;
   text-align: center;
   padding: 15px 0;
-  position: fixed;
-  bottom: 0;
   width: 100%;
   left: 0;
   z-index: 100;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
 /* Footer Container */
@@ -24,7 +22,6 @@
   color: white;
 }
 
-/* Navigation & Social Links */
 .footer-links,
 .social-links {
   display: flex;
@@ -42,4 +39,19 @@
 .footer-links a:hover,
 .social-links a:hover {
   color: #e76f51;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .footer-links,
+  .social-links {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

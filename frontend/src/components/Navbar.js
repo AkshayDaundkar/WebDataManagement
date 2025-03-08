@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaUserCircle } from "react-icons/fa"; // User icon for dropdown
 import "./Navbar.css";
-import logo from "../assets/logo2.png"; // Add your custom logo here
+import logo from "../assets/logo2.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const token = localStorage.getItem("token");
   const userId = localStorage.getItem("userId");
 
@@ -38,47 +41,59 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo-container">
         <img src={logo} alt="Fitness Tracker Logo" className="logo-img" />
-        <h1 className="logo-text">Fitness X tracker</h1>
+        <h1 className="logo-text">Fitness X Tracker</h1>
       </div>
 
-      <div className="nav-links">
-        <NavLink to="/" activeclassname="active">
+      {/* Mobile Menu Icon */}
+      <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+        ☰
+      </div>
+
+      <div className={`nav-links ${menuOpen ? "open" : ""}`}>
+        <NavLink to="/" onClick={() => setMenuOpen(false)}>
           Home
         </NavLink>
-        <NavLink to="/dashboard" activeclassname="active">
+        <NavLink to="/dashboard" onClick={() => setMenuOpen(false)}>
           Dashboard
         </NavLink>
-        <NavLink to="/exercises" activeclassname="active">
+        <NavLink to="/exercises" onClick={() => setMenuOpen(false)}>
           Exercises
         </NavLink>
-        <NavLink to="/nutrition" activeclassname="active">
+        <NavLink to="/nutrition" onClick={() => setMenuOpen(false)}>
           Nutrition
         </NavLink>
-        <NavLink to="/ai-chat" activeclassname="active">
+        <NavLink to="/ai-chat" onClick={() => setMenuOpen(false)}>
           AI Chat
         </NavLink>
-        <NavLink to="/contact" activeclassname="active">
+        <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
           Contact Us
         </NavLink>
       </div>
 
       <div className="auth-buttons">
-        {user ? <span className="user-greeting">{user.name}!</span> : null}
         {token ? (
-          <>
-            <p onClick={handleLogout} className="logout-btn">
-              Logout
-            </p>
-            <NavLink to="/profile" className="profile-btn">
-              Profile
-            </NavLink>
-          </>
+          <div className="user-dropdown">
+            <div
+              className="user-icon"
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+            >
+              <FaUserCircle size={24} /> {user?.name}
+            </div>
+            {dropdownOpen && (
+              <div className="dropdown-menu">
+                <NavLink to="/profile" onClick={() => setDropdownOpen(false)}>
+                  Profile
+                </NavLink>
+                <p onClick={handleLogout}>Logout</p>
+              </div>
+            )}
+          </div>
         ) : (
           <>
-            <NavLink to="/login" className="login-btn">
+            <NavLink to="/login" className="register-btn">
               Login
             </NavLink>
-            <NavLink to="/register" className="login-btn">
+            <NavLink to="/register" className="register-btn">
               Register
             </NavLink>
           </>
