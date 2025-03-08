@@ -25,4 +25,28 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+// ✅ Update a food intake entry
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedEntry = await FoodIntake.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedEntry);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Delete a food intake entry
+router.delete("/:id", async (req, res) => {
+  try {
+    await FoodIntake.findByIdAndDelete(req.params.id);
+    res.json({ msg: "Food intake entry deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

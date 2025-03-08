@@ -80,6 +80,20 @@ const DashboardPage = () => {
     fetchData(); // Re-fetch data to update UI
   };
 
+  const deleteBurnedCalories = async (id) => {
+    await axios.delete(
+      `https://webdatamanagement.onrender.com/api/burned-calories/${id}`
+    );
+    fetchData();
+  };
+
+  const deleteFoodIntake = async (id) => {
+    await axios.delete(
+      `https://webdatamanagement.onrender.com/api/food-intake/${id}`
+    );
+    fetchData();
+  };
+
   const totalBurned = burnedCalories.reduce(
     (acc, entry) => acc + entry.calories,
     0
@@ -226,10 +240,11 @@ const DashboardPage = () => {
             Add
           </button>
 
-          <ul>
-            {burnedCalories.map((entry, index) => (
-              <li key={index}>
+          <ul className="burned-list">
+            {burnedCalories.map((entry) => (
+              <li key={entry._id} className="burned-item">
                 {entry.activity}: {entry.calories} kcal
+                <p onClick={() => deleteBurnedCalories(entry._id)}>❌</p>
               </li>
             ))}
           </ul>
@@ -298,10 +313,11 @@ const DashboardPage = () => {
             Add
           </button>
 
-          <ul>
+          <ul className="burned-list">
             {foodIntake.map((entry, index) => (
-              <li key={index}>
+              <li key={index} className="burned-item">
                 {entry.category}: {entry.calories} kcal
+                <p onClick={() => deleteFoodIntake(entry._id)}>❌</p>
               </li>
             ))}
           </ul>

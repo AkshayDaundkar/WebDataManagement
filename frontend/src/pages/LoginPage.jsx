@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Auth.css";
 
 const LoginPage = () => {
@@ -9,7 +11,29 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    if (!email.trim()) {
+      setError("Email is required.");
+      toast.error("Email is required.");
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Please enter a valid email.");
+      toast.error("Please enter a valid email.");
+      return false;
+    }
+    if (!password.trim()) {
+      setError("Password is required.");
+      toast.error("Password is required.");
+      return false;
+    }
+    setError(""); // Clear errors if validation passes
+    return true;
+  };
+
   const handleLogin = async () => {
+    if (!validateForm()) return;
+
     try {
       const response = await axios.post(
         "https://webdatamanagement.onrender.com/api/auth/login",
@@ -17,10 +41,12 @@ const LoginPage = () => {
       );
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userId", response.data.userId);
-      alert("Login successful!");
+
+      toast.success("Login successful!", { position: "top-right" });
       navigate("/");
     } catch (err) {
       setError("Invalid email or password.");
+      toast.error("Login failed. Please check your credentials.");
     }
   };
 
@@ -51,20 +77,12 @@ const LoginPage = () => {
           Login
         </button>
 
-        <label>Don't have Account?</label>
+        <label>Don't have an account?</label>
         <button className="register-btn">
           <NavLink to="/register" className="register-btn">
             Register
           </NavLink>
         </button>
-      </div>
-
-      {/* Right Side Illustration */}
-      <div className="auth-illustration">
-        <img
-          src="https://fitnessprogramer.com/wp-content/uploads/2021/02/burn-man.png"
-          alt="Fitness"
-        />
       </div>
     </div>
   );

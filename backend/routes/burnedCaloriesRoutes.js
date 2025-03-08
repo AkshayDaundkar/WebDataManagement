@@ -27,4 +27,27 @@ router.get("/:userId", async (req, res) => {
   }
 });
 
+// ✅ Update a burned calories entry
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedEntry = await BurnedCalories.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedEntry);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Delete a burned calories entry
+router.delete("/:id", async (req, res) => {
+  try {
+    await BurnedCalories.findByIdAndDelete(req.params.id);
+    res.json({ msg: "Entry deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;

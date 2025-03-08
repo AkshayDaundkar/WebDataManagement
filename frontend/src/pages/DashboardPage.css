@@ -36,3 +36,55 @@ button {
   padding: 10px;
   margin-top: 10px;
 }
+
+.burned-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  max-height: 250px; /* Set max height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  border: 1px solid #ddd; /* Optional: Border for styling */
+  border-radius: 5px;
+  background: #fff;
+}
+
+/* Custom scrollbar (optional) */
+.burned-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.burned-list::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: 10px;
+}
+
+.burned-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Ensure the last item has no border */
+.burned-item:last-child {
+  border-bottom: none;
+}
+
+.delete-btn {
+  background: #ff4d4d;
+  border: none;
+  color: white;
+  font-size: 14px;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.delete-btn:hover {
+  background: #e60000;
+}

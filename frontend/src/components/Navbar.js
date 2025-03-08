@@ -57,6 +57,9 @@ const Navbar = () => {
         <NavLink to="/ai-chat" activeclassname="active">
           AI Chat
         </NavLink>
+        <NavLink to="/contact" activeclassname="active">
+          Contact Us
+        </NavLink>
       </div>
 
       <div className="auth-buttons">

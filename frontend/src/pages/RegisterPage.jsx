@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Auth.css";
 
 const RegisterPage = () => {
@@ -17,17 +19,55 @@ const RegisterPage = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const validateForm = () => {
+    if (!user.name.trim()) {
+      setError("Name is required.");
+      return false;
+    }
+    if (!user.email.trim()) {
+      setError("Email is required.");
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(user.email)) {
+      setError("Please enter a valid email.");
+      return false;
+    }
+    if (user.password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return false;
+    }
+    if (!user.height || user.height <= 0) {
+      setError("Please enter a valid height.");
+      return false;
+    }
+    if (!user.weight || user.weight <= 0) {
+      setError("Please enter a valid weight.");
+      return false;
+    }
+    if (!user.dailyCalories || user.dailyCalories <= 0) {
+      setError("Please enter a valid calorie goal.");
+      return false;
+    }
+    setError(""); // Clear errors if validation passes
+    return true;
+  };
+
   const handleRegister = async () => {
+    if (!validateForm()) return;
+
     try {
       const response = await axios.post(
         "https://webdatamanagement.onrender.com/api/auth/register",
         user
       );
       setUser(response.data);
-      alert("Registration successful! You can now log in.");
+      toast.success("Registration successful! You can now log in.", {
+        position: "top-right",
+      });
       navigate("/login");
     } catch (err) {
       setError("Error registering user.");
+      toast.error("Registration failed. Please try again.");
     }
   };
 
@@ -51,7 +91,7 @@ const RegisterPage = () => {
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Password (min 6 chars)"
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </div>
@@ -94,7 +134,7 @@ const RegisterPage = () => {
         <button className="register-btn" onClick={handleRegister}>
           Register
         </button>
-        <label>Do you Already have Account?</label>
+        <label>Already have an account?</label>
         <button className="register-btn">
           <NavLink to="/login" className="register-btn">
             Login
@@ -102,13 +142,7 @@ const RegisterPage = () => {
         </button>
       </div>
 
-      {/* Right Side Illustration */}
-      <div className="register-illustration">
-        <img
-          src="https://fitnessprogramer.com/wp-content/uploads/2021/02/burn-man.png"
-          alt="Fitness"
-        />
-      </div>
+      <ToastContainer />
     </div>
   );
 };
