@@ -20,7 +20,7 @@ const NutritionPage = () => {
   return (
     <div className="nutrition-page">
       <h1>
-        <span style={{ color: "#f4a261" }}>Nutrition Facts</span>
+        <span style={{ color: "#f4a261" }}>Nutrition Facts of Food Items</span>
       </h1>
 
       <div className="search-container">

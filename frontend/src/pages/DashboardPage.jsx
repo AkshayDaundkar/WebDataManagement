@@ -118,12 +118,23 @@ const DashboardPage = () => {
 
   // Line Chart Data for Calories Burned Over Time
   const lineChartData = burnedCalories.map((entry, index) => ({
-    date: new Date(entry.date).toLocaleDateString(), // Format date
+    date: (() => {
+      const d = new Date(entry.date);
+      const day = String(d.getDate()).padStart(2, "0"); // Ensure two-digit day
+      const year = String(d.getFullYear()).slice(-2); // Extract last two digits of the year
+      return `${day}/${year}`;
+    })(),
     calories: entry.calories,
   }));
 
   const intakeChartData = foodIntake.map((entry, index) => ({
-    date: new Date(entry.date).toLocaleDateString(),
+    date: (() => {
+      const d = new Date(entry.date);
+      const day = String(d.getDate()).padStart(2, "0"); // Ensure two-digit day
+      const year = String(d.getFullYear()).slice(-2); // Extract last two digits of the year
+      return `${day}/${year}`;
+    })(),
+
     calories: entry.calories,
   }));
 
@@ -197,7 +208,7 @@ const DashboardPage = () => {
         {/* Row 1: Calories Burned & Tracking */}
         <div className="chart-container">
           <h3>Calories Burned vs Goal</h3>
-          <BarChart width={450} height={450} data={barData}>
+          <BarChart width={400} height={400} data={barData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
@@ -252,11 +263,24 @@ const DashboardPage = () => {
 
         <div className="chart-container">
           <h3>Calories Burned Over Time</h3>
-          <LineChart width={450} height={450} data={lineChartData}>
+          <LineChart width={400} height={400} data={lineChartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <XAxis
+              dataKey="date"
+              tick={{ fontSize: 9 }}
+              label={{
+                value: "Date",
+                angle: 0,
+                position: "insideBottom",
+                dy: 10,
+              }}
+            />
             <YAxis
-              label={{ value: "Calories", angle: -90, position: "insideLeft" }}
+              label={{
+                value: "Calories",
+                angle: -90,
+                position: "insideLeft",
+              }}
             />
             <Tooltip />
             <Line type="monotone" dataKey="calories" stroke="#0000FF" />
@@ -266,7 +290,7 @@ const DashboardPage = () => {
         {/* Row 2: Calories Consumed & Tracking */}
         <div className="chart-container">
           <h3>Daily Calorie Intake</h3>
-          <PieChart width={450} height={450}>
+          <PieChart width={400} height={400}>
             <Pie
               data={pieData}
               dataKey="value"
@@ -325,9 +349,18 @@ const DashboardPage = () => {
 
         <div className="chart-container">
           <h3>Calories Taken Over Time</h3>
-          <LineChart width={450} height={450} data={intakeChartData}>
+          <LineChart width={400} height={400} data={intakeChartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <XAxis
+              dataKey="date"
+              tick={{ fontSize: 9 }}
+              label={{
+                value: "Date",
+                angle: 0,
+                position: "insideBottom",
+                dy: 10,
+              }}
+            />
             <YAxis
               label={{ value: "Calories", angle: -90, position: "insideLeft" }}
             />
