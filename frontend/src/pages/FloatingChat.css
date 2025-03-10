@@ -34,6 +34,7 @@
 }
 
 .chat-modal {
+  margin-top: 50px;
   background: white;
   width: 400px;
   max-width: 90%;
@@ -45,8 +46,10 @@
 
 /* Close Button */
 .close-btn {
+  top: 20px;
+  right: 0;
+  margin-right: 20px;
   position: absolute;
-  top: 10px;
   background: none;
   border: none;
   font-size: 20px;
