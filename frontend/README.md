@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# **WDM PROJECT - FitXpert AI Frontend**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **Project Overview**
 
-## Available Scripts
+FitXpert AI is an AI-powered fitness tracker that helps users monitor their fitness progress, track workouts, set goals, and receive AI-based recommendations. The **frontend** is built using **React.js**, providing a seamless user experience with dynamic components.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## **How to Run the Application**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### **Prerequisites**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Ensure you have the following installed:
 
-### `npm test`
+- **Node.js** (Recommended: v16+)
+- **npm** or **yarn** (Package manager)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### **Setup and Run**
 
-### `npm run build`
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your-repo/FitXpert-AI.git
+   cd FitXpert-AI/frontend
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2 Install Dependencies
+npm install
+-Starts the Application
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This will launch the app in development mode. Open http://localhost:3000 in your browser to view the application.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3 Build for Production
+npm run build
+This will create an optimized production-ready build.
 
-### `npm run eject`
+## Project Structure
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+frontend/
+│── node_modules/ # Dependencies
+│── public/ # Public assets
+│── src/ # Source code
+│ ├── assets/ # Images, fonts, and other static assets
+│ ├── components/ # Reusable UI components
+│ ├── pages/ # Individual page components
+│ ├── routes/ # Routing configurations
+│ ├── App.js # Main application component
+│ ├── index.js # Entry point of the React application
+│ ├── App.css # Global styles
+│── .gitignore # Files ignored by Git
+│── package.json # Project metadata and dependencies
+│── README.md # Documentation
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Frontend Components
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Components (Reusable UI Elements)
+   Footer.js / Footer.css → Footer section of the application
+   Navbar.js / Navbar.css → Navigation bar across all pages
+2. Pages (Main Views)
+   AIChatPage.jsx → AI-based chatbot for fitness guidance
+   ContactUs.jsx → Contact form for user support
+   DashboardPage.jsx → User dashboard with fitness tracking stats
+   ExercisePage.jsx → Displays exercise logs and recommendations
+   HomePage.jsx → Landing page with app features
+   LoginPage.jsx → User authentication (Login form)
+   NutritionPage.jsx → Tracks meals and provides AI-driven diet plans
+   ProfilePage.jsx → User profile settings (weight, height, goals)
+   RegisterPage.jsx → User registration form
+3. Routes (Routing & Navigation)
+   PrivateRoute.js → Restricts access to authenticated users
+   Router.js → Manages app navigation and routing
+4. Other Important Files
+   index.js → Entry point, renders <App /> component
+   reportWebVitals.js → Performance monitoring
+   setupTests.js → Unit testing setup
+   .gitignore → Excludes unnecessary files from Git commits
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# This project is licensed under the MIT License.
