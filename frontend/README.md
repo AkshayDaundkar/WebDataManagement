@@ -35,7 +35,6 @@ This will create an optimized production-ready build.
 
 ## Project Structure
 
-<!--
 frontend/
 │── node_modules/ # Dependencies
 │── public/ # Public assets
@@ -49,7 +48,7 @@ frontend/
 │ ├── App.css # Global styles
 │── .gitignore # Files ignored by Git
 │── package.json # Project metadata and dependencies
-│── README.md # Documentation -->
+│── README.md # Documentation
 
 ## Frontend Components
 
