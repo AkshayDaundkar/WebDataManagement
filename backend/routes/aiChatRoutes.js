@@ -25,7 +25,7 @@ router.post("/chat", async (req, res) => {
           },
           { role: "user", content: message },
         ],
-        max_tokens: 200,
+        max_tokens: 600,
       },
       {
         headers: {
