@@ -13,6 +13,7 @@ import ContactUs from "../pages/ContactUs";
 import GroupChat from "../pages/GroupChat";
 import AboutUs from "./../pages/AboutUs";
 import FAQ from "../pages/Faq";
+import LandingPage from "../pages/LandingPage";
 
 const AppRouter = () => {
   return (
@@ -31,6 +32,7 @@ const AppRouter = () => {
         <Route path="/chat" element={<GroupChat />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/landing" element={<LandingPage />} />
       </Route>
     </Routes>
   );
