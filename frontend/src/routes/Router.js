@@ -10,6 +10,9 @@ import RegisterPage from "../pages/RegisterPage";
 import ProfilePage from "../pages/ProfilePage";
 import PrivateRoute from "./PrivateRoute";
 import ContactUs from "../pages/ContactUs";
+import GroupChat from "../pages/GroupChat";
+import AboutUs from "./../pages/AboutUs";
+import FAQ from "../pages/Faq";
 
 const AppRouter = () => {
   return (
@@ -25,6 +28,9 @@ const AppRouter = () => {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/chat" element={<GroupChat />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/faq" element={<FAQ />} />
       </Route>
     </Routes>
   );

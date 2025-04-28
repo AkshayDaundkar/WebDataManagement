@@ -68,11 +68,17 @@ const Navbar = () => {
             <NavLink to="/nutrition" onClick={() => setMenuOpen(false)}>
               Nutrition
             </NavLink>
-            <NavLink to="/ai-chat" onClick={() => setMenuOpen(false)}>
-              AI Chat
+            <NavLink to="/chat" onClick={() => setMenuOpen(false)}>
+              Chat
             </NavLink>
             <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
               Contact Us
+            </NavLink>
+            <NavLink to="/about" onClick={() => setMenuOpen(false)}>
+              About Us
+            </NavLink>
+            <NavLink to="/faq" onClick={() => setMenuOpen(false)}>
+              FAQ's
             </NavLink>
           </>
         )}

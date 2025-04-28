@@ -40,19 +40,19 @@ const AIChatPage = () => {
   };
 
   return (
-    <div className="chat-container">
+    <div className="chat-containerai">
       <h2>🤖 AI Fitness Chatbot</h2>
       <button className="clear-btn" onClick={clearChatHistory}>
         Clear Chat
       </button>
-      <div className="chat-box">
+      <div className="chat-boxai">
         {responses.map((msg, index) => (
           <p key={index} className={msg.isUser ? "user-msg" : "bot-msg"}>
             {msg.text}
           </p>
         ))}
       </div>
-      <div className="input-box">
+      <div className="input-boxai">
         <input
           type="text"
           placeholder="Ask me anything..."
