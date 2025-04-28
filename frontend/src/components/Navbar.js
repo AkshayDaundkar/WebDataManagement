@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaUserCircle } from "react-icons/fa"; // User icon for dropdown
+import { FaUserCircle } from "react-icons/fa";
 import "./Navbar.css";
 import logo from "../assets/logo2.png";
 
@@ -10,12 +10,13 @@ const Navbar = () => {
   const [user, setUser] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const token = localStorage.getItem("token");
+
+  const token = localStorage.getItem("token"); // fetch fresh every render
   const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (userId) {
+      if (userId && token) {
         try {
           const response = await axios.get(
             `https://webdatamanagement.onrender.com/api/users/${userId}`
@@ -27,7 +28,7 @@ const Navbar = () => {
       }
     };
     fetchUser();
-  }, [userId]);
+  }, [userId, token]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -35,6 +36,7 @@ const Navbar = () => {
     setUser(null);
     alert("Logged out successfully!");
     navigate("/login");
+    window.location.reload(); // <- force navbar refresh
   };
 
   return (
@@ -53,21 +55,27 @@ const Navbar = () => {
         <NavLink to="/" onClick={() => setMenuOpen(false)}>
           Home
         </NavLink>
-        <NavLink to="/dashboard" onClick={() => setMenuOpen(false)}>
-          Dashboard
-        </NavLink>
-        <NavLink to="/exercises" onClick={() => setMenuOpen(false)}>
-          Exercises
-        </NavLink>
-        <NavLink to="/nutrition" onClick={() => setMenuOpen(false)}>
-          Nutrition
-        </NavLink>
-        <NavLink to="/ai-chat" onClick={() => setMenuOpen(false)}>
-          AI Chat
-        </NavLink>
-        <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
-          Contact Us
-        </NavLink>
+
+        {/* Only show when logged in */}
+        {token && (
+          <>
+            <NavLink to="/dashboard" onClick={() => setMenuOpen(false)}>
+              Dashboard
+            </NavLink>
+            <NavLink to="/exercises" onClick={() => setMenuOpen(false)}>
+              Exercises
+            </NavLink>
+            <NavLink to="/nutrition" onClick={() => setMenuOpen(false)}>
+              Nutrition
+            </NavLink>
+            <NavLink to="/ai-chat" onClick={() => setMenuOpen(false)}>
+              AI Chat
+            </NavLink>
+            <NavLink to="/contact" onClick={() => setMenuOpen(false)}>
+              Contact Us
+            </NavLink>
+          </>
+        )}
       </div>
 
       <div className="auth-buttons">

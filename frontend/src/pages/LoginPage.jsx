@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Auth.css";
+import { AuthContext } from "./AuthContext";
 
 const LoginPage = () => {
+  const { login } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -41,6 +43,7 @@ const LoginPage = () => {
       );
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("userId", response.data.userId);
+      login(response.data.token); // 👈 This updates context + localStorage
 
       toast.success("Login successful!", { position: "top-right" });
       navigate("/");

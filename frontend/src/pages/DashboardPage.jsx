@@ -28,7 +28,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   const fetchData = async () => {
     try {

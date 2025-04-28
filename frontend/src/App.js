@@ -7,8 +7,12 @@ import FloatingChat from "./pages/FloatingChat";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
 
+import { AuthContext } from "./pages/AuthContext";
 function App() {
+  const { token } = useContext(AuthContext);
+
   return (
     <Router>
       <Navbar />
@@ -16,7 +20,7 @@ function App() {
         <ToastContainer position="top-right" autoClose={3000} />
         <AppRouter />
       </div>
-      <FloatingChat />
+      {token && <FloatingChat />}
       <Footer />
     </Router>
   );
