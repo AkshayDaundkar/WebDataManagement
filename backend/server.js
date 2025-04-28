@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-
+const Message = require("./models/message"); // Import the Message model
 // Load environment variables
 dotenv.config();
 
@@ -56,3 +56,29 @@ mongoose
   .catch((err) => {
     console.error("❌ MongoDB Connection Error:", err);
   });
+
+// Get all messages
+app.get("/api/messages", async (req, res) => {
+  try {
+    const messages = await Message.find().sort({ timestamp: 1 }); // oldest first
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Post a new message
+app.post("/api/messages", async (req, res) => {
+  const { senderName, message } = req.body;
+  if (!senderName || !message) {
+    return res.status(400).json({ error: "Missing senderName or message" });
+  }
+
+  try {
+    const newMessage = new Message({ senderName, message });
+    await newMessage.save();
+    res.status(201).json(newMessage);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
