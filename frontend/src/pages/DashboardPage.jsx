@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import html2canvas from "html2canvas";
+import { FiDownload, FiMaximize2 } from "react-icons/fi"; // import React Icons (optional)
+
 import {
   PieChart,
   Pie,
@@ -25,6 +28,9 @@ const DashboardPage = () => {
   const [newFoodCategory, setNewFoodCategory] = useState("");
   const [newFoodCalories, setNewFoodCalories] = useState("");
   const [insights, setInsights] = useState(""); // AI-Powered Insights
+
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -117,26 +123,56 @@ const DashboardPage = () => {
   ];
 
   // Line Chart Data for Calories Burned Over Time
-  const lineChartData = burnedCalories.map((entry, index) => ({
-    date: (() => {
-      const d = new Date(entry.date);
-      const day = String(d.getDate()).padStart(2, "0"); // Ensure two-digit day
-      const year = String(d.getFullYear()).slice(-2); // Extract last two digits of the year
-      return `${day}/${year}`;
-    })(),
-    calories: entry.calories,
-  }));
+  const lineChartData = burnedCalories.map((entry) => {
+    const d = new Date(entry.date);
+    return {
+      date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(d.getDate()).padStart(2, "0")}`, // 👉 yyyy-mm-dd format
+      rawDate: d, // full Date object
+      calories: entry.calories,
+    };
+  });
 
-  const intakeChartData = foodIntake.map((entry, index) => ({
-    date: (() => {
-      const d = new Date(entry.date);
-      const day = String(d.getDate()).padStart(2, "0"); // Ensure two-digit day
-      const year = String(d.getFullYear()).slice(-2); // Extract last two digits of the year
-      return `${day}/${year}`;
-    })(),
+  const intakeChartData = foodIntake.map((entry) => {
+    const d = new Date(entry.date);
+    return {
+      date: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(
+        2,
+        "0"
+      )}-${String(d.getDate()).padStart(2, "0")}`,
+      rawDate: d,
+      calories: entry.calories,
+    };
+  });
 
-    calories: entry.calories,
-  }));
+  const filteredBurnedData = lineChartData.filter((entry) => {
+    const entryDate = new Date(entry.rawDate);
+    const entryOnlyDate = new Date(
+      entryDate.getFullYear(),
+      entryDate.getMonth(),
+      entryDate.getDate()
+    );
+    return (
+      (!startDate || entryOnlyDate >= new Date(startDate)) &&
+      (!endDate || entryOnlyDate <= new Date(endDate))
+    );
+  });
+
+  const filteredIntakeData = intakeChartData.filter((entry) => {
+    const entryDate = new Date(entry.rawDate);
+    const entryOnlyDate = new Date(
+      entryDate.getFullYear(),
+      entryDate.getMonth(),
+      entryDate.getDate()
+    ); // 👈 remove time portion!
+
+    return (
+      (!startDate || entryOnlyDate >= new Date(startDate)) &&
+      (!endDate || entryOnlyDate <= new Date(endDate))
+    );
+  });
 
   const generateInsights = (burnedCalories, foodIntake) => {
     const totalBurned = burnedCalories.reduce(
@@ -192,6 +228,39 @@ const DashboardPage = () => {
     setInsights(message);
   };
 
+  const downloadChart = (id, filename) => {
+    const chartElement = document.getElementById(id);
+    html2canvas(chartElement).then((canvas) => {
+      const link = document.createElement("a");
+      link.download = filename;
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  };
+
+  const openFullscreen = (id) => {
+    const elem = document.getElementById(id);
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+      /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      /* IE11 */
+      elem.msRequestFullscreen();
+    }
+  };
+
+  const getProgressColor = (percentage) => {
+    if (percentage <= 30) {
+      return "#e74c3c"; // Red
+    } else if (percentage <= 70) {
+      return "#f39c12"; // Yellow
+    } else {
+      return "#2ecc71"; // Green
+    }
+  };
+
   return (
     <div className="dashboard-container">
       {user && (
@@ -204,25 +273,53 @@ const DashboardPage = () => {
         <p>{insights}</p>
       </div>
 
+      <div className="progress-bar-container">
+        <div
+          className="progress-bar-fill"
+          style={{
+            width: `${Math.min((totalBurned / calorieGoal) * 100, 100)}%`,
+            background: getProgressColor((totalBurned / calorieGoal) * 100),
+          }}
+        >
+          {Math.min((totalBurned / calorieGoal) * 100, 100).toFixed(0)}%
+        </div>
+      </div>
+
       <div className="dashboard-grid">
         {/* Row 1: Calories Burned & Tracking */}
         <div className="chart-container">
           <h3>Calories Burned vs Goal</h3>
-          <BarChart width={400} height={400} data={barData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="value">
-              {" "}
-              {barData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={entry.name === "Burned" ? "#27ae60" : "#e74c3c"}
-                />
-              ))}
-            </Bar>
-          </BarChart>
+          <div className="chart-wrapper" id="burnedGoalChart">
+            <div className="floating-icons">
+              <FiDownload
+                size={20}
+                title="Download Chart"
+                onClick={() =>
+                  downloadChart("burnedGoalChart", "CaloriesBurnedGoal.png")
+                }
+              />
+              <FiMaximize2
+                size={20}
+                title="Fullscreen"
+                onClick={() => openFullscreen("burnedGoalChart")}
+              />
+            </div>
+            <BarChart width={400} height={400} data={barData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="value">
+                {" "}
+                {barData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={entry.name === "Burned" ? "#27ae60" : "#e74c3c"}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </div>
         </div>
 
         <div className="calorie-tracker">
@@ -262,8 +359,28 @@ const DashboardPage = () => {
         </div>
 
         <div className="chart-container">
+          <div className="date-filter-container">
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                setStartDate("");
+                setEndDate("");
+              }}
+            >
+              Clear
+            </button>
+          </div>
           <h3>Calories Burned Over Time</h3>
-          <LineChart width={400} height={400} data={lineChartData}>
+          <LineChart width={400} height={400} data={filteredBurnedData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="date"
@@ -290,24 +407,43 @@ const DashboardPage = () => {
         {/* Row 2: Calories Consumed & Tracking */}
         <div className="chart-container">
           <h3>Daily Calorie Intake</h3>
-          <PieChart width={400} height={400}>
-            <Pie
-              data={pieData}
-              dataKey="value"
-              cx="50%"
-              cy="50%"
-              outerRadius={100}
-              label
-            >
-              {pieData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={["#ff7f50", "#87CEEB"][index]}
-                />
-              ))}
-            </Pie>
-            <Tooltip />
-          </PieChart>
+          <div className="chart-wrapper" id="calorieIntakeChart">
+            {/* Floating Icon Buttons */}
+            <div className="floating-icons">
+              <FiDownload
+                size={20}
+                title="Download Chart"
+                onClick={() =>
+                  downloadChart("calorieIntakeChart", "CaloriesIntake.png")
+                }
+              />
+              <FiMaximize2
+                size={20}
+                title="Fullscreen"
+                onClick={() => openFullscreen("calorieIntakeChart")}
+              />
+            </div>
+
+            {/* PieChart inside */}
+            <PieChart width={400} height={400}>
+              <Pie
+                data={pieData}
+                dataKey="value"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                label
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={["#ff7f50", "#87CEEB"][index]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </div>
         </div>
 
         <div className="food-tracker">
@@ -349,7 +485,27 @@ const DashboardPage = () => {
 
         <div className="chart-container">
           <h3>Calories Taken Over Time</h3>
-          <LineChart width={400} height={400} data={intakeChartData}>
+          <div className="date-filter-container">
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+            />
+            <button
+              onClick={() => {
+                setStartDate("");
+                setEndDate("");
+              }}
+            >
+              Clear
+            </button>
+          </div>
+          <LineChart width={400} height={400} data={filteredIntakeData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="date"
