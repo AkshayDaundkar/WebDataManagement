@@ -35,7 +35,7 @@ const Navbar = () => {
     localStorage.removeItem("userId");
     setUser(null);
     alert("Logged out successfully!");
-    navigate("/login");
+    navigate("/");
     window.location.reload(); // <- force navbar refresh
   };
 
@@ -52,7 +52,7 @@ const Navbar = () => {
       </div>
 
       <div className={`nav-links ${menuOpen ? "open" : ""}`}>
-        <NavLink to="/" onClick={() => setMenuOpen(false)}>
+        <NavLink to="/home" onClick={() => setMenuOpen(false)}>
           Home
         </NavLink>
 

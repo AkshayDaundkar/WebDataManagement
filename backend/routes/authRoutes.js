@@ -66,4 +66,27 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Forget Password
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    // Check if user exists
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ msg: "User not found" });
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    // Update password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ msg: "Password updated successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;

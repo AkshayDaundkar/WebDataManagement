@@ -14,15 +14,18 @@ import GroupChat from "../pages/GroupChat";
 import AboutUs from "./../pages/AboutUs";
 import FAQ from "../pages/Faq";
 import LandingPage from "../pages/LandingPage";
+import ForgetPasswordPage from "../pages/ForgotPassword";
 
 const AppRouter = () => {
   return (
     <Routes>
+      <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgetPasswordPage />} />
 
       <Route element={<PrivateRoute />}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/exercises" element={<ExercisePage />} />
         <Route path="/nutrition" element={<NutritionPage />} />
         <Route path="/ai-chat" element={<AIChatPage />} />
@@ -32,7 +35,6 @@ const AppRouter = () => {
         <Route path="/chat" element={<GroupChat />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/faq" element={<FAQ />} />
-        <Route path="/landing" element={<LandingPage />} />
       </Route>
     </Routes>
   );

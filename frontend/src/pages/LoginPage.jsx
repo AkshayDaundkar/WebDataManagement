@@ -46,7 +46,7 @@ const LoginPage = () => {
       login(response.data.token); // 👈 This updates context + localStorage
 
       toast.success("Login successful!", { position: "top-right" });
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       setError("Invalid email or password.");
       toast.error("Login failed. Please check your credentials.");
@@ -56,7 +56,7 @@ const LoginPage = () => {
   return (
     <div className="auth-container">
       <div className="auth-form">
-        <h2>🔑 Login to Your Account</h2>
+        <h2> Login to Your Account</h2>
         {error && <p className="error-msg">{error}</p>}
 
         <div className="form-grid">
@@ -79,6 +79,9 @@ const LoginPage = () => {
         <button className="auth-btn" onClick={handleLogin}>
           Login
         </button>
+        <NavLink to="/forgot-password" className="forgot-link">
+          Forgot Password?
+        </NavLink>
 
         <label>Don't have an account?</label>
         <button className="register-btn">
