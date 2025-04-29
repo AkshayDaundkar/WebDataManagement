@@ -1,37 +1,135 @@
-/* Group 3 WDM */
-/* •Akshay Daundkar- 1002149721
-•Arun Sabarish Krishnaswamy Ganesan- 1002234442
-•Pallavi Chowdary Gogineni-102221774
-•Kevin Gomez- 1000873983
-•Sanket Rajendrakumar More-1001952737 */
-/* General Page Styles */
-.nutrition-page {
-  text-align: center;
-  padding: 50px;
+.nutrition-page-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 40px;
   background: #f5f5f5;
+  min-height: 100vh;
+  flex-wrap: wrap;
+}
+
+/* Sidebar */
+.sidebar {
+  flex: 0 0 270px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: fit-content;
   min-height: 100vh;
 }
 
-/* Header Styling */
-h1 {
-  font-size: 2.2rem;
-  color: #2c3e50;
-  margin-bottom: 20px;
+.sidebar-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-select {
+  padding: 8px;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+  font-weight: 500;
+}
+
+.clear-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 10px 12px;
+  border: none;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
   font-weight: bold;
 }
 
-h1 span {
-  color: #27ae60;
+.clear-btn:hover {
+  background-color: #c0392b;
 }
 
-/* Search Bar */
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.history-item {
+  font-size: 1rem;
+  padding: 8px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #eee;
+  transition: background-color 0.3s;
+}
+
+.history-item:hover {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+
+/* Nutrition Page */
+.nutrition-page {
+  flex: 1;
+  text-align: center;
+}
+
+.nutrition-container {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+  width: 85%;
+  margin-top: 20px;
+}
+
+.nutrition-title {
+  font-size: 1.8rem;
+  color: #34495e;
+  margin-bottom: 20px;
+}
+
+/* Grid in 2 Columns Always (unless mobile) */
+.nutrition-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  font-size: 1.1rem;
+  color: #34495e;
+}
+
+.nutrition-item {
+  background: #f8f9fa;
+  padding: 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 5px solid #f4a261;
+  font-weight: 500;
+}
+
+.nutrition-item span {
+  font-size: 1.3rem;
+  margin-right: 10px;
+}
+
+/* Search styling */
 .search-container {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 25px;
-  flex-wrap: wrap; /* Allow elements to wrap on smaller screens */
+  flex-wrap: wrap;
 }
 
 .search-container input {
@@ -46,6 +144,7 @@ h1 span {
 
 .search-container button {
   padding: 15px 20px;
+  background-color: #f4a261;
   color: white;
   border: none;
   border-radius: 8px;
@@ -53,7 +152,6 @@ h1 span {
   cursor: pointer;
   font-size: 1rem;
   transition: 0.3s ease-in-out;
-  max-width: 450px;
 }
 
 .search-container button:hover {
@@ -61,82 +159,42 @@ h1 span {
   transform: scale(1.05);
 }
 
-/* Nutrition Info Box */
-.nutrition-container {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 900px;
-  margin: auto;
-  margin-top: 20px;
-}
-
-/* Title Inside Nutrition Box */
-.nutrition-title {
-  font-size: 1.8rem;
-  text-align: center;
-  color: #34495e;
-  margin-bottom: 15px;
-}
-
-/* Responsive Grid Layout */
-.nutrition-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 12px;
-  font-size: 1.1rem;
-  color: #34495e;
-}
-
-/* Nutrition Item Styling */
-.nutrition-item {
-  background: #f8f9fa;
-  padding: 12px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  border-left: 5px solid #f4a261;
-  justify-content: space-between;
-  flex-wrap: wrap; /* Ensures wrapping on smaller screens */
-}
-
-.nutrition-item span {
-  font-size: 1.4rem;
-}
-
-/* Responsive Design */
+/* Responsive */
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-
-  .search-container {
+  .nutrition-page-wrapper {
     flex-direction: column;
-    align-items: center;
-  }
-
-  .search-container input {
-    width: 90%;
-  }
-
-  .search-container button {
-    width: 90%;
-  }
-
-  .nutrition-container {
-    padding: 20px;
   }
 
   .nutrition-grid {
-    grid-template-columns: 1fr; /* Single column on smaller screens */
+    grid-template-columns: 1fr;
   }
 
-  .nutrition-item {
-    font-size: 0.9rem;
+  .sidebar {
+    width: 100%;
   }
+
+  .search-container input,
+  .search-container button {
+    width: 100%;
+  }
+}
+
+.history-label {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #e74c3c;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.delete-btn:hover {
+  color: #c0392b;
 }
