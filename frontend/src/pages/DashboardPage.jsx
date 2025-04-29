@@ -31,6 +31,8 @@ const DashboardPage = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [manualActivity, setManualActivity] = useState("");
+  const [manualFoodCategory, setManualFoodCategory] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -59,31 +61,42 @@ const DashboardPage = () => {
   };
 
   const addBurnedCalories = async () => {
-    if (!newActivity || isNaN(newCalories) || newCalories <= 0) return;
+    const activityName =
+      manualActivity.trim() !== "" ? manualActivity : newActivity;
+    if (!activityName || isNaN(newCalories) || newCalories <= 0) return;
+
     await axios.post(
       "https://webdatamanagement.onrender.com/api/burned-calories",
       {
         userId,
-        activity: newActivity,
+        activity: activityName,
         calories: parseInt(newCalories),
+        date: new Date(),
       }
     );
+
     setNewActivity("");
+    setManualActivity("");
     setNewCalories("");
-    fetchData(); // Re-fetch data to update UI
+    fetchData(); // Re-fetch data
   };
 
   const addFoodIntake = async () => {
-    if (!newFoodCategory || isNaN(newFoodCalories) || newFoodCalories <= 0)
-      return;
+    const categoryName =
+      manualFoodCategory.trim() !== "" ? manualFoodCategory : newFoodCategory;
+    if (!categoryName || isNaN(newFoodCalories) || newFoodCalories <= 0) return;
+
     await axios.post("https://webdatamanagement.onrender.com/api/food-intake", {
       userId,
-      category: newFoodCategory,
+      category: categoryName,
       calories: parseInt(newFoodCalories),
+      date: new Date(),
     });
+
     setNewFoodCategory("");
+    setManualFoodCategory("");
     setNewFoodCalories("");
-    fetchData(); // Re-fetch data to update UI
+    fetchData(); // Re-fetch data
   };
 
   const deleteBurnedCalories = async (id) => {
@@ -324,6 +337,8 @@ const DashboardPage = () => {
 
         <div className="calorie-tracker">
           <h3>Track Calories Burned</h3>
+
+          {/* Select from dropdown */}
           <select
             value={newActivity}
             onChange={(e) => setNewActivity(e.target.value)}
@@ -335,12 +350,23 @@ const DashboardPage = () => {
             <option value="Weightlifting">🏋️‍♂️ Weightlifting</option>
           </select>
 
+          {/* OR manually type */}
+          <input
+            type="text"
+            placeholder="Or type activity manually"
+            value={manualActivity}
+            onChange={(e) => setManualActivity(e.target.value)}
+            style={{ padding: "5px" }}
+          />
+
           <input
             type="number"
             placeholder="Calories burned"
             value={newCalories}
             onChange={(e) => setNewCalories(e.target.value)}
+            style={{ padding: "5px" }}
           />
+
           <button
             style={{ backgroundColor: "#f4a261" }}
             onClick={addBurnedCalories}
@@ -448,6 +474,8 @@ const DashboardPage = () => {
 
         <div className="food-tracker">
           <h3>Track Food Intake</h3>
+
+          {/* Select from dropdown */}
           <select
             value={newFoodCategory}
             onChange={(e) => setNewFoodCategory(e.target.value)}
@@ -460,12 +488,23 @@ const DashboardPage = () => {
             <option value="Drinks">🥤 Drinks</option>
           </select>
 
+          {/* OR manually type */}
+          <input
+            type="text"
+            placeholder="Or type food manually"
+            value={manualFoodCategory}
+            onChange={(e) => setManualFoodCategory(e.target.value)}
+            style={{ padding: "5px" }}
+          />
+
           <input
             type="number"
             placeholder="Calories consumed"
             value={newFoodCalories}
             onChange={(e) => setNewFoodCalories(e.target.value)}
+            style={{ padding: "5px" }}
           />
+
           <button
             style={{ backgroundColor: "#f4a261" }}
             onClick={addFoodIntake}
